@@ -22,5 +22,5 @@ jobs:
   include:
     - stage: coverage
       node_js: "8"
-      script: yarn add -D coveralls
-      script: jest --verbose --coverage --collectCoverageFrom=src/**/* && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage
+      - script: yarn add -D coveralls
+      - script: jest --verbose --coverage --collectCoverageFrom=src/**/* && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage

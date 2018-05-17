@@ -83,7 +83,6 @@ function tests () {
     beforeEach(() => setWildcard(env))
 
     test('color output: on', () => {
-      process.env['FORCE_COLOR'] = 1
       const debug = require('../src')
       const info = debug('info')
       const color = 166
