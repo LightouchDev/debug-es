@@ -9,7 +9,7 @@
 A tiny JavaScript debugging utility modelled after Node.js core's debugging
 technique. Works in Node.js and web browsers.
 
-NOTE: it's a fork of [`debug`](https://github.com/visionmedia/debug) for development. (original package is no update for about six months.)
+NOTE: it's a fork of [`debug`](https://github.com/visionmedia/debug) for contribution. (original package is no update for about six months.)
 
 ## Installation
 
@@ -23,7 +23,7 @@ $ yarn add debug-es
 
 - ES6 support
   - node >= 6
-  - node 4 (but cannot be tested in jest)
+  - node 4 (not tested)
 
 ## Usage
 
@@ -248,13 +248,13 @@ You can also enable debug dynamically by calling the `enable()` method :
 ```js
 let debug = require('debug-es')
 
-console.log(1, debug.enabled('test'))
+console.log(1, debug.enabler('test'))
 
 debug.enable('test')
-console.log(2, debug.enabled('test'))
+console.log(2, debug.enabler('test'))
 
 debug.disable()
-console.log(3, debug.enabled('test'))
+console.log(3, debug.enabler('test'))
 
 ```
 
@@ -273,7 +273,7 @@ Usage :
 Note that calling `enable()` completely overrides previously set DEBUG variable :
 
 ```bash
-$ DEBUG=foo node -e 'const dbg = require("debug-es"); dbg.enable("bar"); console.log(dbg.enabled("foo"))'
+$ DEBUG=foo node -e 'const dbg = require("debug-es"); dbg.enable("bar"); console.log(dbg.enabler("foo"))'
 => false
 ```
 
