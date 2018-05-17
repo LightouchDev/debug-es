@@ -12,9 +12,11 @@ function resetEnv (env) {
       .filter(key => /^debug_/i.test(key))
       .forEach(key => delete process.env[key])
 
+    if (process.env.CI) {
     const tty = require('tty')
     tty.isatty = jest.fn()
     tty.isatty.mockReturnValue(true)
+  }
   }
   delete process.env.DEBUG
 }
