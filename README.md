@@ -246,7 +246,7 @@ log('still goes to stdout, but via console.info now')
 You can also enable debug dynamically by calling the `enable()` method :
 
 ```js
-let debug = require('debug')
+let debug = require('debug-es')
 
 console.log(1, debug.enabled('test'))
 
@@ -273,7 +273,7 @@ Usage :
 Note that calling `enable()` completely overrides previously set DEBUG variable :
 
 ```bash
-$ DEBUG=foo node -e 'var dbg = require("debug"); dbg.enable("bar"); console.log(dbg.enabled("foo"))'
+$ DEBUG=foo node -e 'const dbg = require("debug-es"); dbg.enable("bar"); console.log(dbg.enabled("foo"))'
 => false
 ```
 
@@ -283,7 +283,7 @@ After you've created a debug instance, you can determine whether or not it is
 enabled by checking the `enabled` property:
 
 ```javascript
-const debug = require('debug')('http')
+const debug = require('debug-es')('http')
 
 if (debug.enabled) {
   // do stuff...
@@ -292,16 +292,6 @@ if (debug.enabled) {
 
 You can also manually toggle this property to force the debug instance to be
 enabled or disabled.
-
-## Transpile for es5
-
-```bash
-$ npm run build
-or
-$ yarn build
-```
-
-and transpiler will place files in `es5` folder.
 
 ## Authors
 
