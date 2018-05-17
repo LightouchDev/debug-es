@@ -107,6 +107,8 @@ function tests () {
   })
 
   describe('storage', () => {
+    afterAll(() => { window.localStorage = localStorage })
+
     test('localStorage exist', () => {
       const debug = require('../src')
       expect(debug.storage).toBe(localStorage)
@@ -115,7 +117,6 @@ function tests () {
     test('localStorage not exist', () => {
       delete window.localStorage
       const debug = require('../src')
-      window.localStorage = localStorage
       expect(debug.storage).toBeUndefined()
     })
   })

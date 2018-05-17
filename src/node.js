@@ -27,9 +27,9 @@ const createDebug = module.exports = {
           205, 206, 207, 208, 209, 214, 215, 220, 221
         ]
       }
-    } catch (error) {
-      return [ 6, 2, 3, 4, 5, 1 ]
-    }
+    } catch (error) {}
+
+    return [ 6, 2, 3, 4, 5, 1 ]
   })(),
 
   formatters: {
