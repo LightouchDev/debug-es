@@ -9,8 +9,7 @@
   "main": "src/index.js",
   "scripts": {
     "coverage": "jest --verbose --coverage --collectCoverageFrom=src/**/*",
-    "test": "jest --verbose",
-    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --verbose"
+    "test": "jest --verbose"
   },
   "keywords": [
     "debug",

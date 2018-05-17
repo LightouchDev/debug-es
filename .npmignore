@@ -1,0 +1,8 @@
+test
+yarn.lock
+yarn-error.log
+coverage
+.coveralls.yml
+.eslintrc
+.travis.yml
+.npmignore
