@@ -28,7 +28,11 @@ function tests () {
     })
 
     test('256-color support', () => {
-      if (process.env.CI) process.env['FORCE_COLOR'] = 1
+      if (process.env.CI) {
+        process.env['FORCE_COLOR'] = 1
+        const supportsColor = require('supports-color')
+        supportsColor.stderr.has256 = true
+      }
       expect(require('../src').colors).toHaveLength(76)
     })
   })
@@ -84,7 +88,11 @@ function tests () {
     beforeEach(() => setWildcard(env))
 
     test('color output: on', () => {
-      if (process.env.CI) process.env['FORCE_COLOR'] = 1
+      if (process.env.CI) {
+        process.env['FORCE_COLOR'] = 1
+        const supportsColor = require('supports-color')
+        supportsColor.stderr.has256 = true
+      }
       const debug = require('../src')
       const info = debug('info')
       const color = 166
