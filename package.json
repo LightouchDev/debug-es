@@ -1,0 +1,39 @@
+{
+  "name": "debug-es",
+  "version": "1.0.0",
+  "description": "small debugging utility like 'debug', but write in es6",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/LightouchDev/debug-es"
+  },
+  "main": "src/index.js",
+  "scripts": {
+    "coverage": "jest --verbose --coverage --collectCoverageFrom=src/**/*",
+    "test": "jest --verbose",
+    "test:debug": "node --inspect-brk ./node_modules/jest/bin/jest.js --verbose"
+  },
+  "keywords": [
+    "debug",
+    "logging"
+  ],
+  "author": "TJ Holowaychuk <tj@vision-media.ca>",
+  "contributors": [
+    "Nathan Rajlich <nathan@tootallnate.net> (http://n8.io)",
+    "Andrew Rhyne <rhyneandrew@gmail.com>",
+    "Miau Lightouch <miaulightouch@gmail.com>"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "ms": "^2.1.1"
+  },
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.10.0",
+    "eslint-plugin-jest": "^21.15.1",
+    "eslint-plugin-node": "^6.0.1",
+    "eslint-plugin-promise": "^3.7.0",
+    "eslint-plugin-standard": "^3.1.0",
+    "jest": "^22.4.3"
+  }
+}
