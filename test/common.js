@@ -4,7 +4,7 @@ function resetEnv (env) {
   jest.resetModules()
 
   if (env === 'browser') {
-    window.localStorage.removeItem('debug')
+    window.localStorage && window.localStorage.removeItem('debug')
   }
 
   if (env === 'node') {
@@ -13,10 +13,10 @@ function resetEnv (env) {
       .forEach(key => delete process.env[key])
 
     if (process.env.CI) {
-    const tty = require('tty')
-    tty.isatty = jest.fn()
-    tty.isatty.mockReturnValue(true)
-  }
+      const tty = require('tty')
+      tty.isatty = jest.fn()
+      tty.isatty.mockReturnValue(true)
+    }
   }
   delete process.env.DEBUG
 }
