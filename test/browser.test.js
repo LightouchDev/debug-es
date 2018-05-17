@@ -36,7 +36,6 @@ function tests () {
         __nwjs: undefined,
         browser: undefined
       })
-      window.localStorage.removeItem('debug')
     })
 
     afterAll(() => { process.browser = true })
@@ -107,15 +106,13 @@ function tests () {
   })
 
   describe('storage', () => {
-    afterAll(() => { window.localStorage = localStorage })
-
     test('localStorage exist', () => {
       const debug = require('../src')
       expect(debug.storage).toBe(localStorage)
     })
 
     test('localStorage not exist', () => {
-      delete window.localStorage
+      window.localStorage = undefined
       const debug = require('../src')
       expect(debug.storage).toBeUndefined()
     })
