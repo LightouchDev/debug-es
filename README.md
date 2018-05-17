@@ -23,6 +23,7 @@ $ yarn add debug-es
 
 - ES6 support
   - node >= 6
+  - node 4 (but cannot be tested in jest)
 
 ## Usage
 

@@ -3,8 +3,10 @@
 module.exports = function (createDebug) {
   let prevTime
 
-  return function debug (...args) {
+  return function debug () {
     if (!debug.enabled) return
+
+    const args = Array.from(arguments)
 
     // set 'diff' timestamp
     const now = +new Date() // convert to number immediately
