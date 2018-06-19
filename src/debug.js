@@ -1,19 +1,17 @@
 'use strict'
 
 module.exports = function (createDebug) {
-  let prevTime
-
   return function debug () {
     if (!debug.enabled) return
 
     const args = Array.from(arguments)
 
     // set 'diff' timestamp
+    const { time } = debug
     const now = +new Date() // convert to number immediately
-    debug.diff = now - (prevTime || now)
-    debug.prev = prevTime
-    debug.now = now
-    prevTime = now
+    debug._diff = now - (time.now || now)
+    time.prev = time.now
+    time.now = now
 
     args[0] = createDebug.coerce(args[0])
 
