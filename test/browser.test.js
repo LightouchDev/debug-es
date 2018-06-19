@@ -191,6 +191,7 @@ function tests () {
     const edgeOld = 'Mozilla/5.0 (Windows NT 10.0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/42.0.2311.135 Safari/537.36 Edge/12.10136'
     const firefox = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0'
     const chrome = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.170 Safari/537.36'
+    const aria2 = 'aria2/1.34.0'
 
     Object.defineProperty(navigator, 'userAgent', (_value => {
       return {
@@ -239,5 +240,10 @@ function tests () {
 
       expect(require('../src').useColors()).toBe(true)
     })
+    test('aria2', () => {
+      navigator.userAgent = aria2
+
+      expect(require('../src').useColors()).toBe(false)
+    })    
   })
 }

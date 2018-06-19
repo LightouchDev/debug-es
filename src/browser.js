@@ -188,5 +188,6 @@ const createDebug = module.exports = {
       // double check webkit in userAgent just in case we are in a worker
       if (UA.match(/applewebkit\/\d+/)) return true
     }
+    return false
   }
 }
