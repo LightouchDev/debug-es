@@ -293,56 +293,6 @@ if (debug.enabled) {
 You can also manually toggle this property to force the debug instance to be
 enabled or disabled.
 
-## Change timebase
-
-debug-es module and each debug instance would ship with a `time` object,
-it would contain:
-
-- prev: previous message time.
-- now: current message time.
-- createTime: instance create time.
-
-each instance would use dedicated time object by default, but you can use
-`replaceTimebase(timeObject)` to change it.
-
-Usage:
-`replaceTimebase(timeObject)`
-`timeObject` can be:
-
-- Object: time object
-- Falsy: create and use new local time object
-- Truthy: use global time object (equal to `debug.time`)
-
-```javascript
-const debug = require('debug-es')
-const info = debug('info')
-
-/* use global time */
-info.replaceTimebase(true)
-
-/* use new local time */
-info.replaceTimebase(false)
-
-/* use custom time */
-const timeObject = debug.getTime()
-info.replaceTimebase(timeObject)
-```
-
-if you want debug instance use global/specified time by default,
-just modify module method `genTime` to point to any time object.
-
-```javascript
-const debug = require('debug-es')
-
-const workA = debug('worker:a') // local time
-
-debug.genTime = () => debug.time
-const workB = debug('worker:b') // global time
-
-debug.genTime = () => window.anotherTime
-const workC = debug('worker:c') // use window.anotherTime as time object
-```
-
 ## Authors
 
 - TJ Holowaychuk

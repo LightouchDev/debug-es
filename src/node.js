@@ -102,7 +102,7 @@ const createDebug = module.exports = {
       const prefix = `  ${colorCode};1m${name} \u001b[0m`
 
       args[0] = prefix + args[0].split('\n').join(`\n prefix`)
-      args.push(`${colorCode}m+${createDebug.humanize(this._diff)}\u001b[0m`)
+      args.push(`${colorCode}m+${createDebug.humanize(this.diff)}\u001b[0m`)
     } else {
       const date = this.inspectOpts.hideDate
         ? ''

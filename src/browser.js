@@ -81,7 +81,7 @@ const createDebug = module.exports = {
     args[0] =
       cTag + this.namespace + ' ' +
       cTag + args[0] + ' ' +
-      cTag + '+' + createDebug.humanize(this._diff)
+      cTag + '+' + createDebug.humanize(this.diff)
 
     if (!this.useColors) return
     const currentStyle = `color: ${this.color}`

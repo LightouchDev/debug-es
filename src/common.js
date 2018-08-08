@@ -24,33 +24,7 @@ module.exports = function (env) {
         }
 
         return false
-      },
-
-      /**
-       * Replace time object
-       * truthy: use global time object
-       * falsy: use new time object
-       * Object: use specified time object
-       *
-       * @param {Object|Boolean} time
-       */
-      replaceTimebase (value) {
-        if (typeof value !== 'object') {
-          value = value
-            ? createDebug.time
-            : createDebug.genTime()
-        }
-
-        Object.defineProperty(newDebug, 'time', {
-          configurable: true,
-          value
-        })
       }
-    })
-
-    Object.defineProperty(newDebug, 'time', {
-      configurable: true,
-      value: createDebug.genTime()
     })
 
     typeof createDebug.init === 'function' && createDebug.init(newDebug)
@@ -162,27 +136,12 @@ module.exports = function (env) {
         hash |= 0 // Convert to 32bit integer
       }
       return createDebug.colors[Math.abs(hash) % createDebug.colors.length]
-    },
-
-    /**
-     * Generate time object.
-     */
-    genTime () {
-      return {
-        prev: undefined,
-        now: undefined,
-        createTime: +new Date()
-      }
     }
   }
 
   Object.assign(createDebug, props, env)
 
   createDebug.enable(createDebug.load())
-
-  Object.defineProperty(createDebug, 'time', {
-    value: createDebug.genTime()
-  })
 
   return createDebug
 }
