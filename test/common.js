@@ -121,22 +121,6 @@ module.exports = (env, tests) => {
         expect(debug.enabler('worker:b')).toBe(true)
         expect(debug.enabler('work:a')).toBe(false)
       })
-
-      describe('time', () => {
-        test('check time object', () => {
-          const debug = require('../src')
-          expect(debug.time)
-            .toEqual(
-              expect.objectContaining({ createTime: expect.any(Number) }))
-        })
-
-        test('generate time object', () => {
-          const debug = require('../src')
-          expect(debug.genTime())
-            .toEqual(
-              expect.objectContaining({ createTime: expect.any(Number) }))
-        })
-      })
     })
 
     describe('debug.js', () => {
@@ -232,69 +216,6 @@ module.exports = (env, tests) => {
 
           debug.enable('*')
           expect(info.enabled).toBe(false)
-        })
-      })
-
-      describe('time', () => {
-        test('check time object', () => {
-          const debug = require('../src')
-          const info = debug('info')
-          expect(info.time)
-            .toEqual(
-              expect.objectContaining({ createTime: expect.any(Number) }))
-        })
-
-        test('time object cannot be replace directly', () => {
-          const debug = require('../src')
-          const info = debug('info')
-          const { time } = info
-          info.time = {}
-
-          expect(info.time === time).toBeTruthy()
-        })
-
-        describe('replaceTimebase', () => {
-          test('use new time object', () => {
-            const debug = require('../src')
-            const info = debug('info')
-            const { time } = info
-
-            info.replaceTimebase()
-
-            expect(info.time !== time).toBeTruthy()
-            expect(info.time)
-              .toEqual(
-                expect.objectContaining({ createTime: expect.any(Number) }))
-          })
-
-          test('use global time object', () => {
-            const debug = require('../src')
-            const info = debug('info')
-            const { time } = info
-
-            info.replaceTimebase(true)
-
-            expect(info.time === debug.time).toBeTruthy()
-            expect(info.time !== time).toBeTruthy()
-            expect(info.time)
-              .toEqual(
-                expect.objectContaining({ createTime: expect.any(Number) }))
-          })
-
-          test('use specified time object', () => {
-            const debug = require('../src')
-            const timeObject = debug.genTime()
-            const info = debug('info')
-            const { time } = info
-
-            info.replaceTimebase(timeObject)
-
-            expect(info.time === timeObject).toBeTruthy()
-            expect(info.time !== time).toBeTruthy()
-            expect(info.time)
-              .toEqual(
-                expect.objectContaining({ createTime: expect.any(Number) }))
-          })
         })
       })
     })
