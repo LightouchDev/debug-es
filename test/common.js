@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 
-const modulePath = '../dist'
+const modulePath = '../src'
 
 function resetEnv (env) {
   jest.resetModules()
