@@ -1,23 +1,18 @@
-'use strict'
+import tty from 'tty'
+import util from 'util'
+import supportsColor from 'supports-color'
 
-/**
- * Module dependencies.
- */
+import createDebug from './createDebug'
+import common from './common'
 
-const tty = require('tty')
-const util = require('util')
+export default {
+  ...common,
 
-/**
- * This is the Node.js implementation of `debug()`.
- */
-
-const createDebug = module.exports = {
   /**
    * Colors.
    */
   colors: (() => {
     try {
-      const supportsColor = require('supports-color')
       if (supportsColor.stderr && supportsColor.stderr.has256) {
         return [
           20, 21, 26, 27, 32, 33, 38, 39, 40, 41, 42, 43, 44, 45, 56, 57, 62, 63, 68,
@@ -31,6 +26,32 @@ const createDebug = module.exports = {
 
     return [ 6, 2, 3, 4, 5, 1 ]
   })(),
+
+  /**
+   * Adds ANSI color escape codes if enabled.
+   *
+   * NOTE: only 'this' in formatArgs is scoped in 'debug' instance,
+   *       not in 'createDebug' scope.
+   *
+   * @api public
+   */
+  formatArgs (args) {
+    const name = this.namespace
+
+    if (this.useColors) {
+      const c = this.color
+      const colorCode = '\u001b[3' + (c < 8 ? c : `8;5;${c}`)
+      const prefix = `  ${colorCode};1m${name} \u001b[0m`
+
+      args[0] = prefix + args[0].split('\n').join(`\n prefix`)
+      args.push(`${colorCode}m+${createDebug.humanize(this.diff)}\u001b[0m`)
+    } else {
+      const date = createDebug.inspectOpts.hideDate
+        ? ''
+        : new Date().toISOString() + ' '
+      args[0] = `${date}${name} ${args[0]}`
+    }
+  },
 
   formatters: {
     /**
@@ -74,43 +95,6 @@ const createDebug = module.exports = {
       obj[prop] = value
       return obj
     }, {}),
-
-  /**
-   * Init logic for `debug` instances.
-   *
-   * Create a new `inspectOpts` object in case `useColors` is set
-   * differently for a particular `debug` instance.
-   */
-  init (debug) {
-    debug.inspectOpts = Object.assign({}, this.inspectOpts)
-  },
-
-  /**
-   * Adds ANSI color escape codes if enabled.
-   *
-   * NOTE: only 'this' in formatArgs is scoped in 'debug' instance,
-   *       not in 'createDebug' scope.
-   *
-   * @api public
-   */
-  formatArgs (args) {
-    const name = this.namespace
-
-    if (this.useColors) {
-      const c = this.color
-      const colorCode = '\u001b[3' + (c < 8 ? c : `8;5;${c}`)
-      const prefix = `  ${colorCode};1m${name} \u001b[0m`
-
-      args[0] = prefix + args[0].split('\n').join(`\n prefix`)
-      args.push(`${colorCode}m+${createDebug.humanize(this.diff)}\u001b[0m`)
-    } else {
-      const date = this.inspectOpts.hideDate
-        ? ''
-        : new Date().toISOString() + ' '
-      args[0] = `${date}${name} ${args[0]}`
-    }
-  },
-  humanize: require('ms'),
 
   /**
    * Load `namespaces`.

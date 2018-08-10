@@ -4,13 +4,13 @@
 const env = 'node'
 
 const commonTest = require('./common')
-const { setWildcard } = commonTest
+const { modulePath, setWildcard } = commonTest
 
 commonTest(env, tests)
 
 function tests () {
   test('detect environment', () => {
-    const debug = require('../src')
+    const debug = require(modulePath)
     expect(debug.inspectOpts).toBeTruthy()
   })
 
@@ -24,7 +24,7 @@ function tests () {
         })
       } catch (error) {}
 
-      expect(require('../src').colors).toHaveLength(6)
+      expect(require(modulePath).colors).toHaveLength(6)
     })
 
     test('256-color support', () => {
@@ -33,14 +33,14 @@ function tests () {
         const supportsColor = require('supports-color')
         supportsColor.stderr.has256 = true
       }
-      expect(require('../src').colors).toHaveLength(76)
+      expect(require(modulePath).colors).toHaveLength(76)
     })
   })
 
   describe('formatters', () => {
     // FIXME: better tests required
     process.env.DEBUG = '*'
-    const debug = require('../src')
+    const debug = require(modulePath)
 
     test('%o fomatter', () => {
       expect(() => debug.formatters.o(process.versions)).not.toThrow()
@@ -63,25 +63,7 @@ function tests () {
       showProxy: null
     }
 
-    expect(require('../src').inspectOpts).toEqual(result)
-  })
-
-  test('init', () => {
-    process.env['DEBUG_COLORS'] = 'no'
-    process.env['DEBUG_DEPTH'] = 10
-    process.env['DEBUG_SHOW_HIDDEN'] = 'enabled'
-
-    const result = {
-      colors: false,
-      depth: 10,
-      showHidden: true
-    }
-
-    const debug = require('../src')
-    const answer = {}
-    debug.init(answer)
-
-    expect(answer.inspectOpts).toEqual(result)
+    expect(require(modulePath).inspectOpts).toEqual(result)
   })
 
   describe('formatArgs', () => {
@@ -93,7 +75,7 @@ function tests () {
         const supportsColor = require('supports-color')
         supportsColor.stderr.has256 = true
       }
-      const debug = require('../src')
+      const debug = require(modulePath)
       const info = debug('info')
       const color = 166
       info.log = jest.fn()
@@ -102,7 +84,7 @@ function tests () {
     })
 
     test('color output: on, basic color support', () => {
-      const debug = require('../src')
+      const debug = require(modulePath)
       const info = debug('info')
       const color = 6
       info.color = color
@@ -112,7 +94,7 @@ function tests () {
     })
 
     test('color output: off', () => {
-      const debug = require('../src')
+      const debug = require(modulePath)
       const info = debug('info')
       info.log = jest.fn()
       info.useColors = false
@@ -122,7 +104,7 @@ function tests () {
 
     test('color output: off, and hideDate', () => {
       process.env['DEBUG_HIDE_DATE'] = 'on'
-      const debug = require('../src')
+      const debug = require(modulePath)
       const info = debug('info')
       info.log = jest.fn()
       info.useColors = false
@@ -135,7 +117,7 @@ function tests () {
     const namespaces = 'test, -dummy, worker:*'
     process.env.DEBUG = namespaces
 
-    expect(require('../src/node').load()).toBe(namespaces)
+    expect(require(modulePath).load()).toBe(namespaces)
   })
 
   describe('save', () => {
@@ -143,38 +125,38 @@ function tests () {
 
     test('null namespaces', () => {
       process.env.DEBUG = namespaces
-      const node = require('../src/node')
-      node.save()
-      expect(node.load()).toBeUndefined()
+      const debug = require(modulePath)
+      debug.save()
+      expect(debug.load()).toBeUndefined()
     })
 
     test('valid namespaces', () => {
-      const node = require('../src/node')
-      node.save(namespaces)
-      expect(node.load()).toBe(namespaces)
+      const debug = require(modulePath)
+      debug.save(namespaces)
+      expect(debug.load()).toBe(namespaces)
     })
   })
 
   describe('useColors', () => {
     test('inspectOpts.colors === true', () => {
       process.env['DEBUG_COLORS'] = 'on'
-      expect(require('../src/node').useColors()).toBe(true)
+      expect(require(modulePath).useColors()).toBe(true)
     })
 
     test('inspectOpts.colors === false', () => {
       process.env['DEBUG_COLORS'] = 'off'
-      expect(require('../src/node').useColors()).toBe(false)
+      expect(require(modulePath).useColors()).toBe(false)
     })
 
     test('inspectOpts.colors === undefined', () => {
-      expect(require('../src/node').useColors()).toBe(true)
+      expect(require(modulePath).useColors()).toBe(true)
     })
 
     test('inspectOpts.colors === undefined, tty.isatty() === false', () => {
       const tty = require('tty')
       tty.isatty = jest.fn()
       tty.isatty.mockReturnValue(false)
-      expect(require('../src/node').useColors()).toBe(false)
+      expect(require(modulePath).useColors()).toBe(false)
     })
   })
 }

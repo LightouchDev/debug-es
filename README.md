@@ -9,7 +9,7 @@
 A tiny JavaScript debugging utility modelled after Node.js core's debugging
 technique. Works in Node.js and web browsers.
 
-NOTE: it's a fork of [`debug`](https://github.com/visionmedia/debug) for contribution. (original package is no update for about six months.)
+NOTE: it's a fork of [`debug`](https://github.com/visionmedia/debug) for es module development.
 
 ## Installation
 
@@ -97,14 +97,6 @@ Then, run the program to be debugged as usual.
 Every debug instance has a color generated for it based on its namespace name.
 This helps when visually parsing the debug output to identify which debug instance
 a debug line belongs to.
-
-### Node.js
-
-In Node.js, colors are enabled when stderr is a TTY. You also _should_ install
-the [`supports-color`](https://npmjs.org/supports-color) module alongside debug,
-otherwise debug will only use a small handful of basic colors.
-
-<img width="521" src="https://user-images.githubusercontent.com/71256/29092181-47f6a9e6-7c3a-11e7-9a14-1928d8a711cd.png">
 
 ### Web Browser
 
