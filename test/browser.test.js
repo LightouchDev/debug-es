@@ -2,7 +2,6 @@
  * Test case for browser environment
  */
 const env = 'browser'
-const process = global.process
 
 process.browser = true
 
@@ -22,15 +21,13 @@ const localStorage = window.localStorage = window.sessionStorage = {
 }
 
 const commonTest = require('./common')
-const { setWildcard } = commonTest
-commonTest(env, tests)
+const { modulePath, setWildcard } = commonTest
 
-function tests () {
+const tests = () => {
   beforeEach(() => { window.localStorage = localStorage })
 
   describe('detect environment', () => {
     beforeEach(() => {
-      global.process = process
       Object.assign(process, {
         type: undefined,
         __nwjs: undefined,
@@ -41,35 +38,36 @@ function tests () {
     afterAll(() => { process.browser = true })
 
     test(`browser: no global process object`, () => {
+      require('supports-color')
       global.process = undefined
 
-      const debug = require('../src')
+      const debug = require(modulePath)
       global.process = process
       expect(debug).toHaveProperty('storage', expect.anything())
     })
     test(`Electron: process.type === 'renderer'`, () => {
       process.type = 'renderer'
 
-      const debug = require('../src')
+      const debug = require(modulePath)
       expect(debug).toHaveProperty('storage', expect.anything())
     })
     test(`nwjs: process.__nwjs is truthy`, () => {
       process.__nwjs = 1
 
-      const debug = require('../src')
+      const debug = require(modulePath)
       expect(debug).toHaveProperty('storage', expect.anything())
     })
     test(`'process' package support`, () => {
       process.browser = true
 
-      const debug = require('../src')
+      const debug = require(modulePath)
       expect(debug).toHaveProperty('storage', expect.anything())
     })
   })
 
   describe('formatters', () => {
     describe('%j formatter', () => {
-      const debug = require('../src')
+      const debug = require(modulePath)
       const { j: formatter } = debug.formatters
 
       // this test borrow from fast-json-stringify
@@ -92,8 +90,8 @@ function tests () {
         expect(formatter(obj)).toBe('{}')
       })
 
+      // FIXME: it's hard to make stringify throw error
       test.skip('error handle', () => {
-        // FIXME: it's hard to make stringify throw error
         const error = new Error('this is a fake error')
         const obj = {}
         Object.defineProperty(obj, 'error', {
@@ -107,13 +105,13 @@ function tests () {
 
   describe('storage', () => {
     test('localStorage exist', () => {
-      const debug = require('../src')
+      const debug = require(modulePath)
       expect(debug.storage).toBe(localStorage)
     })
 
     test('localStorage not exist', () => {
       window.localStorage = undefined
-      const debug = require('../src')
+      const debug = require(modulePath)
       expect(debug.storage).toBeUndefined()
     })
   })
@@ -122,7 +120,7 @@ function tests () {
     beforeEach(() => setWildcard(env))
 
     test('color output: on', () => {
-      const debug = require('../src')
+      const debug = require(modulePath)
       const info = debug('info')
       info.log = jest.fn()
       info('%%this is message%%')
@@ -130,7 +128,7 @@ function tests () {
     })
 
     test('color output: off', () => {
-      const debug = require('../src')
+      const debug = require(modulePath)
       const info = debug('info')
       info.log = jest.fn()
       info.useColors = false
@@ -139,7 +137,7 @@ function tests () {
     })
 
     test('custom color tag', () => {
-      const debug = require('../src')
+      const debug = require(modulePath)
       const info = debug('info')
       info.log = jest.fn()
       info('%%this is %cmessage%%', 'color: #ff0000')
@@ -152,7 +150,7 @@ function tests () {
       const namespaces = 'test, -dummy, worker:*'
       window.localStorage.setItem('debug', namespaces)
 
-      const browser = require('../src/browser')
+      const browser = require(modulePath)
       expect(browser.load()).toBe(namespaces)
     })
 
@@ -161,7 +159,7 @@ function tests () {
       process.env.DEBUG = namespaces
       expect(window.localStorage.getItem('debug')).toBeFalsy()
 
-      const browser = require('../src/browser')
+      const browser = require(modulePath)
       expect(browser.load()).toBe(namespaces)
     })
   })
@@ -170,7 +168,7 @@ function tests () {
     const namespaces = 'test, -dummy, worker:*'
 
     test('null namespaces', () => {
-      const browser = require('../src/browser')
+      const browser = require(modulePath)
       window.localStorage.setItem('debug', namespaces)
       browser.save()
 
@@ -178,7 +176,7 @@ function tests () {
     })
 
     test('valid namespaces', () => {
-      const browser = require('../src/browser')
+      const browser = require(modulePath)
       browser.save(namespaces)
 
       expect(browser.load()).toBe(namespaces)
@@ -205,7 +203,7 @@ function tests () {
     })(navigator.userAgent))
 
     test('Electron/nwjs', () => {
-      const debug = require('../src')
+      const debug = require(modulePath)
       process.type = 'renderer'
       expect(debug.useColors()).toBe(true)
       delete process.type
@@ -218,32 +216,33 @@ function tests () {
     test('IE 11', () => {
       navigator.userAgent = ie11
 
-      expect(require('../src').useColors()).toBe(false)
+      expect(require(modulePath).useColors()).toBe(false)
     })
     test('edge 12.10136', () => {
       navigator.userAgent = edgeOld
 
-      expect(require('../src').useColors()).toBe(false)
+      expect(require(modulePath).useColors()).toBe(false)
     })
     test('edge 16.16299', () => {
       navigator.userAgent = edge
 
-      expect(require('../src').useColors()).toBe(true)
+      expect(require(modulePath).useColors()).toBe(true)
     })
     test('firefox 61', () => {
       navigator.userAgent = firefox
 
-      expect(require('../src').useColors()).toBe(true)
+      expect(require(modulePath).useColors()).toBe(true)
     })
     test('chrome 66', () => {
       navigator.userAgent = chrome
 
-      expect(require('../src').useColors()).toBe(true)
+      expect(require(modulePath).useColors()).toBe(true)
     })
     test('aria2', () => {
       navigator.userAgent = aria2
 
-      expect(require('../src').useColors()).toBe(false)
-    })    
+      expect(require(modulePath).useColors()).toBe(false)
+    })
   })
 }
+commonTest(env, tests)

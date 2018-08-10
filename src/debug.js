@@ -1,6 +1,4 @@
-'use strict'
-
-module.exports = function (createDebug) {
+export default function (createDebug) {
   let prevTime
 
   return function debug () {

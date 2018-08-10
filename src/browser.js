@@ -1,6 +1,28 @@
-'use strict'
+import createDebug from './createDebug'
+import common from './common'
 
-const createDebug = module.exports = {
+/**
+ * Stringify without circular issue
+ * @param {any} content
+ */
+function safeStringify (content) {
+  const cache = []
+
+  return JSON.stringify(content, (key, value) => {
+    if (typeof value === 'object' && value !== null) {
+      if (cache.indexOf(value) !== -1) {
+        // Circular reference found, discard key
+        return
+      }
+      // Store value in our collection
+      cache.push(value)
+    }
+    return value
+  })
+}
+
+export default {
+  ...common,
   /**
    * Colors.
    */
@@ -17,56 +39,6 @@ const createDebug = module.exports = {
     '#FF00FF', '#FF3300', '#FF3333', '#FF3366', '#FF3399', '#FF33CC', '#FF33FF',
     '#FF6600', '#FF6633', '#FF9900', '#FF9933', '#FFCC00', '#FFCC33'
   ],
-
-  /**
-   * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
-   */
-  formatters: {
-    j (value) {
-      /**
-       * Stringify without circular issue
-       * @param {any} content
-       */
-      function safeStringify (content) {
-        const cache = []
-
-        return JSON.stringify(content, (key, value) => {
-          if (typeof value === 'object' && value !== null) {
-            if (cache.indexOf(value) !== -1) {
-              // Circular reference found, discard key
-              return
-            }
-            // Store value in our collection
-            cache.push(value)
-          }
-          return value
-        })
-      }
-
-      try {
-        return safeStringify(value)
-      } catch (error) {
-        return `[UnexpectedJSONParseError]: ${error.message}`
-      }
-    }
-  },
-  humanize: require('ms'),
-
-  /**
-   * LocalStorage attempts to return the LocalStorage.
-   *
-   * This is necessary because safari throws
-   * when a user disables cookies/LocalStorage
-   * and you attempt to access it.
-   *
-   * @return {LocalStorage|null}
-   * @api private
-   */
-  storage: (() => {
-    try {
-      return window.localStorage
-    } catch (error) {}
-  })(),
 
   /**
    * Colorize log arguments if enabled.
@@ -92,7 +64,7 @@ const createDebug = module.exports = {
     // figure out the correct index to insert the CSS into
     let index = 0
     let lastC = 0
-    args[0].replace(/%[a-zA-Z%]/g, (match) => {
+    args[0].replace(/%[a-zA-Z%]/g, match => {
       if (match === '%%') return
       index++
       if (match === '%c') {
@@ -105,6 +77,19 @@ const createDebug = module.exports = {
   },
 
   /**
+   * Map %j to `JSON.stringify()`, since no Web Inspectors do that by default.
+   */
+  formatters: {
+    j (value) {
+      try {
+        return safeStringify(value)
+      } catch (error) {
+        return `[UnexpectedJSONParseError]: ${error.message}`
+      }
+    }
+  },
+
+  /**
    * Load `namespaces`.
    *
    * @return {String} returns the previously persisted debug modes
@@ -113,7 +98,7 @@ const createDebug = module.exports = {
   load () {
     let namespaces
     try {
-      namespaces = this.storage.debug
+      namespaces = createDebug.storage.debug
     } catch (error) {}
 
     // If debug isn't set in LS, and we're in Electron/nwjs, try to load $DEBUG
@@ -149,12 +134,28 @@ const createDebug = module.exports = {
   save (namespaces) {
     try {
       if (namespaces == null) {
-        this.storage.removeItem('debug')
+        createDebug.storage.removeItem('debug')
       } else {
-        this.storage.debug = namespaces
+        createDebug.storage.debug = namespaces
       }
     } catch (error) {}
   },
+
+  /**
+   * LocalStorage attempts to return the LocalStorage.
+   *
+   * This is necessary because safari throws
+   * when a user disables cookies/LocalStorage
+   * and you attempt to access it.
+   *
+   * @return {LocalStorage|null}
+   * @api private
+   */
+  storage: (() => {
+    try {
+      return window.localStorage
+    } catch (error) {}
+  })(),
 
   /**
    * TODO: add a `localStorage` variable to explicitly enable/disable colors

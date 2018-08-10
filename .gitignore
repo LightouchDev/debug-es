@@ -62,3 +62,7 @@ typings/
 
 # we don't need to lock package version
 yarn.lock
+
+# build
+build/
+dist/

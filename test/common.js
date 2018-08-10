@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 
+const modulePath = '../dist'
+
 function resetEnv (env) {
   jest.resetModules()
 
@@ -32,7 +34,7 @@ module.exports = (env, tests) => {
   describe(`common test in ${env}`, () => {
     describe('common.js', () => {
       describe('coerce: handle Error messages', () => {
-        const debug = require('../src')
+        const debug = require(modulePath)
         const message = 'this is message'
 
         test('Error object', () => {
@@ -50,7 +52,7 @@ module.exports = (env, tests) => {
       })
 
       test('disable: turn off all instances', () => {
-        const debug = require('../src')
+        const debug = require(modulePath)
         debug.disable()
         expect(debug.skips).toHaveLength(0)
         expect(debug.names).toHaveLength(0)
@@ -67,7 +69,7 @@ module.exports = (env, tests) => {
         }
 
         test('turn on instances by namespaces', () => {
-          const debug = require('../src')
+          const debug = require(modulePath)
           debug('test')
           debug('dummy')
           debug('worker:a')
@@ -88,7 +90,7 @@ module.exports = (env, tests) => {
         })
 
         test('wildcard with some skip names', () => {
-          const debug = require('../src')
+          const debug = require(modulePath)
           debug('test')
           debug('dummy')
           debug('worker:a')
@@ -102,13 +104,13 @@ module.exports = (env, tests) => {
         })
 
         test('non-string namespaces', () => {
-          const debug = require('../src')
+          const debug = require(modulePath)
           expect(() => debug.enable(true)).not.toThrow()
         })
       })
 
       test('enabler: check namespace enabled', () => {
-        const debug = require('../src')
+        const debug = require(modulePath)
 
         expect(debug.enabler('')).toBe(false)
         expect(debug.enabler('name*')).toBe(true)
@@ -128,7 +130,7 @@ module.exports = (env, tests) => {
 
       test('debug is disabled', () => {
         resetEnv(env)
-        const debug = require('../src')
+        const debug = require(modulePath)
         debug.log = jest.fn()
         const info = debug('info')
         info('this is disabled')
@@ -138,7 +140,7 @@ module.exports = (env, tests) => {
 
       describe('formatter', () => {
         test('% escape', () => {
-          const debug = require('../src')
+          const debug = require(modulePath)
           debug.formatArgs = jest.fn()
           debug.log = () => {}
 
@@ -150,7 +152,7 @@ module.exports = (env, tests) => {
         })
 
         test('custom formatter', () => {
-          const debug = require('../src')
+          const debug = require(modulePath)
           debug.formatArgs = jest.fn()
           debug.log = () => {}
           debug.formatters.z = value => value.toUpperCase()
@@ -164,7 +166,7 @@ module.exports = (env, tests) => {
 
       describe('log function', () => {
         test('default log()', () => {
-          const debug = require('../src')
+          const debug = require(modulePath)
           debug.log = jest.fn()
 
           const info = debug('test')
@@ -175,7 +177,7 @@ module.exports = (env, tests) => {
         })
 
         test('custom log()', () => {
-          const debug = require('../src')
+          const debug = require(modulePath)
 
           const info = debug('test')
           info.log = jest.fn()
@@ -187,7 +189,7 @@ module.exports = (env, tests) => {
 
       describe('destroy', () => {
         test('destroy instance', () => {
-          const debug = require('../src')
+          const debug = require(modulePath)
           debug('test')
           const info = debug('info')
 
@@ -200,7 +202,7 @@ module.exports = (env, tests) => {
         })
 
         test('destroy instance that not in instances array', () => {
-          const debug = require('../src')
+          const debug = require(modulePath)
           const info = debug('info')
           info.enabled = false
 
@@ -221,7 +223,7 @@ module.exports = (env, tests) => {
     })
 
     test('basic sanity check', () => {
-      const debug = require('../src')
+      const debug = require(modulePath)
       const info = debug('info')
       info.enabled = true
       expect(() => info('hello world')).not.toThrow()
@@ -233,6 +235,7 @@ module.exports = (env, tests) => {
 }
 
 Object.assign(module.exports, {
+  modulePath,
   resetEnv,
   setWildcard
 })

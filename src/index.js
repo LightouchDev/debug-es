@@ -1,9 +1,10 @@
-'use strict'
+import createDebug from './createDebug'
+import browser from './browser'
+import node from './node'
 
 /**
  * Detect environment
  */
-
 const env =
   // web browsers
   typeof process === 'undefined' ||
@@ -13,7 +14,10 @@ const env =
   process.__nwjs ||
   // 'process' package
   process.browser
-    ? require('./browser.js')
-    : require('./node.js')
+    ? browser
+    : node
 
-module.exports = require('./common')(env)
+const debug = Object.assign(createDebug, env)
+debug.enable(debug.load())
+
+export default debug
