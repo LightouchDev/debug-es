@@ -64,5 +64,5 @@ typings/
 yarn.lock
 
 # build
-build/
-dist/
+esm/
+lib/

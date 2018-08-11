@@ -6,5 +6,6 @@ coverage
 .coveralls.yml
 .eslintrc
 .gitignore
-.travis.yml
 .npmignore
+.travis.yml
+jest.config.js

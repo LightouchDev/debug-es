@@ -2,37 +2,27 @@
   "env": {
     "esm": {
       "presets": [
-        [
-          "@babel/preset-env",
-          {
-            "modules": false,
-            "targets": {
-              "esmodules": true
-            }
+        ["@babel/preset-env", {
+          "modules": false,
+          "targets": {
+            "esmodules": true
           }
-        ]
+        }]
       ]
     },
     "cjs": {
       "presets": [
-        [
-          "@babel/preset-env",
-          {
-            "modules": false,
-            "targets": {
-              "node": 4
-            }
+        ["@babel/preset-env", {
+          "targets": {
+            "node": 4
           }
-        ]
-      ]
+        }]
+      ],
+      "plugins": ["add-module-exports"]
     },
     "test": {
       "presets": ["@babel/preset-env"],
       "plugins": ["add-module-exports"]
     }
-  },
-  "plugins": [
-    "@babel/plugin-syntax-dynamic-import",
-    "@babel/plugin-transform-runtime"
-  ]
+  }
 }
