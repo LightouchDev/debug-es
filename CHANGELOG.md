@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.2.0 / 2018-08-12
+
+* Revert: debug timebase
+* Breaking: Re-write into ES module
+* Addition: TVMLKit support
+* Addition: Tree-shaking compatibility
+
+## 1.1.0 / 2018-06-20
+
+* Feature: configurable debug instance timebase
+* Update: devDependencies
+* Fix: new color test condition: unexpected useragent
+
 ## 1.0.0 / 2018-05-15
 
 * Breaking: Re-write in ES6
