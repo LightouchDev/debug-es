@@ -1,11 +1,10 @@
-import createDebug from './createDebug'
 import browser from './browser'
 import node from './node'
 
 /**
  * Detect environment
  */
-const env =
+const debug =
   // web browsers
   typeof process === 'undefined' ||
   // Electron
@@ -14,10 +13,7 @@ const env =
   process.__nwjs ||
   // 'process' package
   process.browser
-    ? browser
-    : node
-
-const debug = Object.assign(createDebug, env)
-debug.enable(debug.load())
+    ? browser()
+    : node()
 
 export default debug
