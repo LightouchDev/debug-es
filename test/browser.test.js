@@ -6,22 +6,18 @@ const process = global.process
 
 process.browser = true
 
-let LS
-
-if (typeof localStorage === 'undefined') {
-  LS = window.localStorage = window.sessionStorage = {
-    getItem (key) {
-      const value = this[key]
-      return typeof value === 'undefined'
-        ? null
-        : value
-    },
-    setItem (key, value) {
-      this[key] = value
-    },
-    removeItem (key) {
-      return delete this[key]
-    }
+const localStorage = window.localStorage = window.sessionStorage = {
+  getItem (key) {
+    const value = this[key]
+    return typeof value === 'undefined'
+      ? null
+      : value
+  },
+  setItem (key, value) {
+    this[key] = value
+  },
+  removeItem (key) {
+    return delete this[key]
   }
 }
 
@@ -30,7 +26,7 @@ const { modulePath, setWildcard } = commonTest
 
 const tests = () => {
   beforeEach(() => {
-    window.localStorage = LS || localStorage
+    window.localStorage = localStorage
     global.process = process
     require('supports-color')
   })
@@ -114,12 +110,11 @@ const tests = () => {
   describe('storage', () => {
     test('localStorage exist', () => {
       const debug = require(modulePath)
-      expect(debug.storage).not.toBeUndefined()
+      expect(debug.storage).toBe(localStorage)
     })
 
     test('localStorage not exist', () => {
       window.localStorage = undefined
-      this && (this.localStorage = undefined)
       const debug = require(modulePath)
       expect(debug.storage).toBeUndefined()
     })
@@ -157,7 +152,7 @@ const tests = () => {
   describe('load', () => {
     test('load from localStorage', () => {
       const namespaces = 'test, -dummy, worker:*'
-      localStorage.setItem('debug', namespaces)
+      window.localStorage.setItem('debug', namespaces)
 
       const browser = require(modulePath)
       expect(browser.load()).toBe(namespaces)
@@ -166,7 +161,7 @@ const tests = () => {
     test('load from process.env', () => {
       const namespaces = 'test, -dummy, worker:*'
       process.env.DEBUG = namespaces
-      expect(localStorage.getItem('debug')).toBeFalsy()
+      expect(window.localStorage.getItem('debug')).toBeFalsy()
 
       const browser = require(modulePath)
       expect(browser.load()).toBe(namespaces)
@@ -178,7 +173,7 @@ const tests = () => {
 
     test('null namespaces', () => {
       const browser = require(modulePath)
-      localStorage.setItem('debug', namespaces)
+      window.localStorage.setItem('debug', namespaces)
       browser.save()
 
       expect(browser.load()).toBeUndefined()
