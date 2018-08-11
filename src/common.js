@@ -1,8 +1,6 @@
-import humanize from 'ms'
+import ms from 'ms'
 
-import createDebug from './createDebug'
-
-export default {
+export default createDebug => ({
   colors: [],
 
   /**
@@ -23,7 +21,7 @@ export default {
    */
   formatters: {},
 
-  humanize,
+  humanize: ms,
 
   /**
    * Coerce `value`.
@@ -58,7 +56,6 @@ export default {
 
     createDebug.names = []
     createDebug.skips = []
-
     ;(typeof namespaces === 'string' ? namespaces : '')
       .split(/[\s,]+/)
       .forEach(item => {
@@ -101,9 +98,9 @@ export default {
   selectColor (namespace) {
     let hash = 0
     for (let i in namespace) {
-      hash = ((hash << 5) - hash) + namespace.charCodeAt(i)
+      hash = (hash << 5) - hash + namespace.charCodeAt(i)
       hash |= 0 // Convert to 32bit integer
     }
     return createDebug.colors[Math.abs(hash) % createDebug.colors.length]
   }
-}
+})
