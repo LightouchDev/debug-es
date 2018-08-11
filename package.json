@@ -6,12 +6,13 @@
     "type": "git",
     "url": "https://github.com/LightouchDev/debug-es"
   },
-  "main": "dist/index.umd.js",
-  "module": "dist/index.esm.mjs",
+  "main": "lib/index.js",
+  "module": "esm/index.mjs",
   "scripts": {
-    "build": "npm run build:cjs && npm run build:esm",
-    "build:cjs": "cross-env BABEL_ENV=cjs rollup --config",
-    "build:esm": "cross-env BABEL_ENV=esm rollup --config",
+    "build": "npm run build:cjs && npm run build:esm && npm run post:esm",
+    "build:cjs": "cross-env BABEL_ENV=cjs babel src --out-dir lib",
+    "build:esm": "cross-env BABEL_ENV=esm babel src --out-dir esm",
+    "post:esm": "renamer --force -f /\\.js$/ -r .mjs esm/**",
     "coverage": "jest --verbose --coverage --collectCoverageFrom=src/**/*",
     "test": "jest --verbose"
   },
@@ -31,11 +32,9 @@
     "supports-color": "^5.4.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-rc.0",
-    "@babel/plugin-syntax-dynamic-import": "^7.0.0-rc.1",
-    "@babel/plugin-transform-runtime": "^7.0.0-rc.0",
-    "@babel/preset-env": "^7.0.0-rc.0",
-    "@babel/runtime": "^7.0.0-rc.1",
+    "@babel/cli": "^7.0.0-rc.1",
+    "@babel/core": "^7.0.0-rc.1",
+    "@babel/preset-env": "^7.0.0-rc.1",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^8.2.6",
     "babel-jest": "^23.4.2",
@@ -45,17 +44,12 @@
     "eslint": "^5.3.0",
     "eslint-config-standard": "^11.0.0-beta.0",
     "eslint-plugin-import": "^2.13.0",
-    "eslint-plugin-jest": "^21.20.0",
+    "eslint-plugin-jest": "^21.21.0",
     "eslint-plugin-node": "^7.0.1",
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
-    "jest": "^23.4.2",
+    "jest": "^23.5.0",
     "regenerator-runtime": "^0.12.1",
-    "rollup": "^0.64.1",
-    "rollup-plugin-babel": "^4.0.0-beta.8",
-    "rollup-plugin-commonjs": "^9.1.5",
-    "rollup-plugin-json": "^3.0.0",
-    "rollup-plugin-node-resolve": "^3.3.0",
-    "rollup-plugin-terser": "^1.0.1"
+    "renamer": "^1.0.0"
   }
 }
