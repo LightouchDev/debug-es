@@ -76,6 +76,36 @@ Here are some examples:
 <img width="647" alt="screen shot 2017-08-08 at 12 53 38 pm" src="https://user-images.githubusercontent.com/71256/29091700-a62a6888-7c38-11e7-800b-db911291ca2b.png">
 <img width="647" alt="screen shot 2017-08-08 at 12 53 25 pm" src="https://user-images.githubusercontent.com/71256/29091701-a62ea114-7c38-11e7-826a-2692bedca740.png">
 
+### Tree-shaking
+
+by default, **debug-es** would do lots of runtime environment check to select implement (**node** or **browser**). but it's impossible for tree-shaking without modifying code (or DefinePlugin in webpack)
+
+now, we expose init function for each implement for tree-shaking.
+
+#### CommonJS
+
+```javascript
+// for browser
+const debug = require('debug-es/browser')()
+
+// for node
+const debug = require('debug-es/node')()
+```
+
+#### ES Module
+
+```javascript
+// for browser
+import getDebug from 'debug-es/browser'
+const debug = getDebug()
+
+// for node
+import getDebug from 'debug-es/node'
+const debug = getDebug()
+```
+
+- **NOTE**: init function would **always** generate a new instance of debug.
+
 ### Windows command prompt notes
 
 #### CMD
