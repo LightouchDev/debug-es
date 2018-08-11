@@ -118,7 +118,7 @@ const tests = () => {
     })
 
     test('localStorage not exist', () => {
-      localStorage = undefined
+      global.localStorage = undefined
       const debug = require(modulePath)
       expect(debug.storage).toBeUndefined()
     })
