@@ -2,9 +2,9 @@ test
 yarn.lock
 yarn-error.log
 coverage
-.babelrc.js
+.babelrc
 .coveralls.yml
-.eslintrc
+.eslintrc.js
 .gitignore
 .npmignore
 .travis.yml
