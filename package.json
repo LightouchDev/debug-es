@@ -12,7 +12,7 @@
     "build": "npm run build:cjs && npm run build:esm && npm run post:esm",
     "build:cjs": "cross-env BABEL_ENV=cjs babel src --out-dir lib",
     "build:esm": "cross-env BABEL_ENV=esm babel src --out-dir esm",
-    "post:esm": "renamer --force -f /\\.js$/ -r .mjs esm/**",
+    "post:esm": "rname -f esm/* {{f}}.mjs",
     "coverage": "jest --verbose --coverage --collectCoverageFrom=src/**/*",
     "test": "jest --verbose"
   },
@@ -50,6 +50,6 @@
     "eslint-plugin-standard": "^3.1.0",
     "jest": "^23.5.0",
     "regenerator-runtime": "^0.12.1",
-    "renamer": "^1.0.0"
+    "rename-cli": "^5.1.2"
   }
 }
