@@ -86,21 +86,21 @@ now, we expose init function for each implement for tree-shaking.
 
 ```javascript
 // for browser
-const debug = require('debug-es/browser')()
+const debug = require('debug-es/lib/browser')()
 
 // for node
-const debug = require('debug-es/node')()
+const debug = require('debug-es/lib/node')()
 ```
 
 #### ES Module
 
 ```javascript
 // for browser
-import getDebug from 'debug-es/browser'
+import getDebug from 'debug-es/esm/browser'
 const debug = getDebug()
 
 // for node
-import getDebug from 'debug-es/node'
+import getDebug from 'debug-es/esm/node'
 const debug = getDebug()
 ```
 
