@@ -100,7 +100,7 @@ export function inject (createDebug) {
     load () {
       let namespaces
       try {
-        namespaces = createDebug.storage.debug
+        namespaces = createDebug.storage.getItem('debug')
       } catch (error) {}
 
       // If debug isn't set in LS, and we're in Electron/nwjs, try to load $DEBUG
@@ -138,7 +138,7 @@ export function inject (createDebug) {
         if (namespaces == null) {
           createDebug.storage.removeItem('debug')
         } else {
-          createDebug.storage.debug = namespaces
+          createDebug.storage.setItem('debug', namespaces)
         }
       } catch (error) {}
     },
@@ -155,7 +155,9 @@ export function inject (createDebug) {
      */
     storage: (() => {
       try {
-        return window.localStorage
+        // TVMLKit (Apple TV JS Runtime) does not have a window object, just localStorage in the global context
+        // The Browser also has localStorage in the global context.
+        return localStorage
       } catch (error) {}
     })(),
 
