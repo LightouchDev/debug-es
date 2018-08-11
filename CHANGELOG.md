@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.1 / 2018-08-12
+
+* Fix: forgot to build module before deploy
+
 ## 1.2.0 / 2018-08-12
 
 * Revert: debug timebase
