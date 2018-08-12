@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.2 / 2018-08-12
+
+* Fix: prevent ci remove the files for deploy
+
 ## 1.2.1 / 2018-08-12
 
 * Fix: forgot to build module before deploy
