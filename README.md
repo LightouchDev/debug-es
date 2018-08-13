@@ -104,8 +104,6 @@ import getDebug from 'debug-es/esm/node'
 const debug = getDebug()
 ```
 
-- **NOTE**: init function would **always** generate a new instance of debug.
-
 ### Windows command prompt notes
 
 #### CMD

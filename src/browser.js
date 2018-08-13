@@ -194,6 +194,6 @@ export function inject (createDebug) {
       return false
     }
   })
-  }
+}
 
-export default () => init(inject)
+export default () => init(inject, 'browser')
