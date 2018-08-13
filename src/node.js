@@ -140,6 +140,6 @@ export function inject (createDebug) {
         : tty.isatty(process.stderr.fd)
     }
   })
-  }
+}
 
-export default () => init(inject)
+export default () => init(inject, 'node')
