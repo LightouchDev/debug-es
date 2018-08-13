@@ -1,28 +1,13 @@
 {
-  "env": {
-    "esm": {
-      "presets": [
-        ["@babel/preset-env", {
-          "modules": false,
-          "targets": {
-            "esmodules": true
-          }
-        }]
-      ]
-    },
-    "cjs": {
-      "presets": [
-        ["@babel/preset-env", {
-          "targets": {
-            "node": 4
-          }
-        }]
-      ],
-      "plugins": ["add-module-exports"]
-    },
-    "test": {
-      "presets": ["@babel/preset-env"],
-      "plugins": ["add-module-exports"]
-    }
-  }
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "node": 4
+      }
+    }]
+  ],
+  "plugins": [
+    "@babel/plugin-transform-runtime",
+    "add-module-exports"
+  ]
 }
