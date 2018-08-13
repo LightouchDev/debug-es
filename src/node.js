@@ -6,9 +6,7 @@ import init from './init'
 import common from './common'
 
 export function inject (createDebug) {
-  return {
-    ...common(createDebug),
-
+  return Object.assign(common(createDebug), {
     /**
      * Colors.
      */
@@ -141,7 +139,7 @@ export function inject (createDebug) {
         ? Boolean(this.inspectOpts.colors)
         : tty.isatty(process.stderr.fd)
     }
+  })
   }
-}
 
 export default () => init(inject)
