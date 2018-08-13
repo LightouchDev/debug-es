@@ -22,9 +22,7 @@ function safeStringify (content) {
 }
 
 export function inject (createDebug) {
-  return {
-    ...common(createDebug),
-
+  return Object.assign(common(createDebug), {
     /**
      * Colors.
      */
@@ -195,7 +193,7 @@ export function inject (createDebug) {
       }
       return false
     }
+  })
   }
-}
 
 export default () => init(inject)
