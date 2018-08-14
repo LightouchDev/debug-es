@@ -5,7 +5,7 @@ import supportsColor from 'supports-color'
 import init from './init'
 import common from './common'
 
-export function inject (createDebug) {
+function inject (createDebug) {
   return Object.assign(common(createDebug), {
     /**
      * Colors.

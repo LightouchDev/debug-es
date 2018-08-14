@@ -1,11 +1,12 @@
-test
-yarn.lock
-yarn-error.log
 coverage
+src
+test
 .babelrc
 .coveralls.yml
 .eslintrc.js
 .gitignore
 .npmignore
 .travis.yml
-jest.config.js
+rollup.config.js
+yarn.lock
+yarn-error.log

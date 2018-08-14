@@ -21,7 +21,7 @@ function safeStringify (content) {
   })
 }
 
-export function inject (createDebug) {
+function inject (createDebug) {
   return Object.assign(common(createDebug), {
     /**
      * Colors.
