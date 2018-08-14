@@ -3,7 +3,7 @@
 ## 1.2.3 / 2018-08-15
 
 * Fix: use rollup to distribute module, make es module would work as expected with babel.
-* Fix: init function without namesapce would return new instance now.
+* Fix: init function without namespace would return new instance now.
 
 ## 1.2.2 / 2018-08-12
 
