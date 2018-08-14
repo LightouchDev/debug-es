@@ -222,6 +222,25 @@ module.exports = (env, tests) => {
       })
     })
 
+    describe('init function', () => {
+      test(`init of ${env}`, () => {
+        const init = require(`${modulePath}/${env}`)
+        const firstInstance = init()
+        expect(init()).toEqual(firstInstance)
+      })
+
+      test('init without namespace', () => {
+        const init = require(`${modulePath}/init`)
+        const noop = () => {}
+        const mockFuncs = ({
+          enable: noop,
+          load: noop
+        })
+        const firstInstance = init(() => mockFuncs)
+        expect(init(() => mockFuncs) === firstInstance).toBeFalsy()
+      })
+    })
+
     test('basic sanity check', () => {
       const debug = require(modulePath)
       const info = debug('info')

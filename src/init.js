@@ -14,6 +14,6 @@ export default (inject, namespace) => {
   const debug = createDebug()
   Object.assign(debug, inject(debug))
   debug.enable(debug.load())
-  instance[namespace] = debug
+  if (namespace) instance[namespace] = debug
   return debug
 }
