@@ -76,11 +76,11 @@ Here are some examples:
 <img width="647" alt="screen shot 2017-08-08 at 12 53 38 pm" src="https://user-images.githubusercontent.com/71256/29091700-a62a6888-7c38-11e7-800b-db911291ca2b.png">
 <img width="647" alt="screen shot 2017-08-08 at 12 53 25 pm" src="https://user-images.githubusercontent.com/71256/29091701-a62ea114-7c38-11e7-826a-2692bedca740.png">
 
-### Tree-shaking
+### Choose implement (for tree-shaking)
 
-by default, **debug-es** would do lots of runtime environment check to select implement (**node** or **browser**). but it's impossible for tree-shaking without modifying code (or DefinePlugin in webpack)
+by default, **debug-es** would do lots of runtime environment check to choose implement (**node** or **browser**). but it's impossible for tree-shaking without modifying code (or DefinePlugin in webpack)
 
-now, we expose init function for each implement for tree-shaking.
+now, we expose init function for tree-shaking.
 
 #### CommonJS
 
@@ -90,9 +90,14 @@ const debug = require('debug-es/lib/browser')()
 
 // for node
 const debug = require('debug-es/lib/node')()
+
+// both (no tree-shaking)
+const debug = require('debug-es')
 ```
 
 #### ES Module
+
+ES modules are already **bundled with (non-es) deps**, it can be transpiled by babel.
 
 ```javascript
 // for browser
@@ -102,6 +107,9 @@ const debug = getDebug()
 // for node
 import getDebug from 'debug-es/esm/node'
 const debug = getDebug()
+
+// both (no tree-shaking)
+import debug from 'debug-es/esm'
 ```
 
 ### Windows command prompt notes

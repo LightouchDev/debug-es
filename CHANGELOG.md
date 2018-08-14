@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.2.3 / 2018-08-15
+
+* Fix: use rollup to distribute module, make es module would work as expected with babel.
+
 ## 1.2.2 / 2018-08-12
 
 * Fix: prevent ci remove the files for deploy
