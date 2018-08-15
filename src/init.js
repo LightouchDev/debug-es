@@ -1,3 +1,4 @@
+import common from './common'
 import createDebug from './createDebug'
 
 const instance = {}
@@ -12,7 +13,7 @@ const instance = {}
 export default (inject, namespace) => {
   if (instance[namespace]) return instance[namespace]
   const debug = createDebug()
-  Object.assign(debug, inject(debug))
+  Object.assign(debug, common(debug), inject(debug))
   debug.enable(debug.load())
   if (namespace) instance[namespace] = debug
   return debug
