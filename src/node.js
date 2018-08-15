@@ -140,6 +140,8 @@ function inject (createDebug) {
         : tty.isatty(process.stderr.fd)
     }
   })
-}
 
-export default () => init(inject, 'node')
+const initFunc = () => init(inject, 'node')
+initFunc.inject = inject
+
+export default initFunc

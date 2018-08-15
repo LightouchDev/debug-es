@@ -194,6 +194,8 @@ function inject (createDebug) {
       return false
     }
   })
-}
 
-export default () => init(inject, 'browser')
+const initFunc = () => init(inject, 'browser')
+initFunc.inject = inject
+
+export default initFunc
