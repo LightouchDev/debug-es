@@ -66,3 +66,4 @@ yarn.lock
 # build
 esm/
 lib/
+umd/

@@ -8,9 +8,10 @@
   },
   "main": "./lib/index.js",
   "scripts": {
-    "build": "npm run build:cjs && npm run build:esm",
+    "build": "npm run build:cjs && npm run build:esm && npm run build:umd",
     "build:cjs": "cross-env BABEL_ENV=cjs rollup -c",
     "build:esm": "cross-env BABEL_ENV=esm rollup -c",
+    "build:umd": "cross-env BABEL_ENV=umd rollup -c",
     "coverage": "cross-env BABEL_ENV=test jest --verbose --coverage --collectCoverageFrom=src/**/*",
     "test": "cross-env BABEL_ENV=test jest --verbose"
   },
