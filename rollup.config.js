@@ -4,14 +4,18 @@ import commonjs from 'rollup-plugin-commonjs'
 import babel from 'rollup-plugin-babel'
 import { dependencies } from './package.json'
 
-const esm = process.env.BABEL_ENV === 'esm'
+const outputDir = {
+  esm: 'esm',
+  cjs: 'lib',
+  umd: 'umd'
+}
 
 function genConf (input) {
   const basename = path.basename(input).split('.')[0]
   return {
     input,
     // bundle deps into es modules
-    external: ['os', 'util', 'tty'].concat(esm ? [] : Object.keys(dependencies)),
+    external: ['os', 'util', 'tty'].concat(process.env.BABEL_ENV === 'cjs' ? Object.keys(dependencies) : []),
     plugins: [
       resolve(),
       commonjs(),
@@ -22,9 +26,11 @@ function genConf (input) {
     ],
     // FIXME: do not use mjs extension until other bundler supported.
     output: {
-      format: esm ? 'esm' : 'cjs',
+      format: process.env.BABEL_ENV,
       file: `${basename}.js`,
-      dir: esm ? 'esm' : 'lib'
+      dir: outputDir[process.env.BABEL_ENV],
+      name: process.env.BABEL_ENV === 'umd' ? 'DebugES' : undefined,
+      extend: process.env.BABEL_ENV === 'umd'
     }
   }
 }
