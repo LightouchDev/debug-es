@@ -29,7 +29,7 @@ function genConf (input) {
       format: process.env.BABEL_ENV,
       file: `${basename}.js`,
       dir: outputDir[process.env.BABEL_ENV],
-      name: process.env.BABEL_ENV === 'umd' ? 'DebugES' : undefined,
+      name: process.env.BABEL_ENV === 'umd' ? 'debugES' : undefined,
       extend: process.env.BABEL_ENV === 'umd'
     }
   }
