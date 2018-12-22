@@ -6,6 +6,7 @@ node_js:
   - "6"
   - "8"
   - "10"
+  - "11"
 
 install:
   - yarn
@@ -23,14 +24,14 @@ jobs:
   include:
     - stage: coverage
       node_js: "8"
-      script: 
+      script:
         - jest --verbose --coverage --collectCoverageFrom=src/**/*
         - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
         - rm -rf ./coverage
     - stage: npm release
       if: tag IS present
       node_js: "8"
-      script: 
+      script:
         - yarn build
         - echo "Deploying to npm ..."
       deploy:
