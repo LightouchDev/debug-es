@@ -123,6 +123,30 @@ module.exports = (env, tests) => {
         expect(debug.enabler('worker:b')).toBe(true)
         expect(debug.enabler('work:a')).toBe(false)
       })
+
+      describe('extend', () => {
+        let log
+        beforeEach(() => {
+          const debug = require(modulePath)
+          debug.enable('foo')
+          log = debug('foo')
+        })
+
+        test('should extend namespace', () => {
+          const logBar = log.extend('bar')
+          expect(logBar.namespace).toEqual('foo:bar')
+        })
+
+        test('should extend namespace with custom delimiter', () => {
+          const logBar = log.extend('bar', '--')
+          expect(logBar.namespace).toEqual('foo--bar')
+        })
+
+        test('should extend namespace with empty delimiter', () => {
+          const logBar = log.extend('bar', '')
+          expect(logBar.namespace).toEqual('foobar')
+        })
+      })
     })
 
     describe('debug.js', () => {
