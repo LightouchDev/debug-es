@@ -178,7 +178,7 @@ module.exports = (env, tests) => {
           const info = debug('info')
           info(message)
 
-          expect(debug.formatArgs).toBeCalledWith([message])
+          expect(debug.formatArgs).toHaveBeenCalledWith([message])
         })
 
         test('custom formatter', () => {
@@ -190,7 +190,7 @@ module.exports = (env, tests) => {
           const info = debug('info')
           info('%% %z %%', 'message')
 
-          expect(debug.formatArgs).toBeCalledWith(['%% MESSAGE %%'])
+          expect(debug.formatArgs).toHaveBeenCalledWith(['%% MESSAGE %%'])
         })
       })
 
@@ -203,7 +203,7 @@ module.exports = (env, tests) => {
           info('this is a message')
 
           expect(info.log).toBeFalsy()
-          expect(debug.log).toBeCalled()
+          expect(debug.log).toHaveBeenCalled()
         })
 
         test('custom log()', () => {
@@ -213,7 +213,7 @@ module.exports = (env, tests) => {
           info.log = jest.fn()
           info('this is a message')
 
-          expect(info.log).toBeCalled()
+          expect(info.log).toHaveBeenCalled()
         })
       })
 

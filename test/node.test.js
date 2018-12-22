@@ -80,7 +80,7 @@ function tests () {
       const color = 166
       info.log = jest.fn()
       info('%%this is message%%')
-      expect(info.log).toBeCalledWith(`  \u001b[38;5;${color};1minfo \u001b[0m%%this is message%%`, `\u001b[38;5;${color}m+0ms\u001b[0m`)
+      expect(info.log).toHaveBeenCalledWith(`  \u001b[38;5;${color};1minfo \u001b[0m%%this is message%%`, `\u001b[38;5;${color}m+0ms\u001b[0m`)
     })
 
     test('color output: on, basic color support', () => {
@@ -90,7 +90,7 @@ function tests () {
       info.color = color
       info.log = jest.fn()
       info('%%this is message%%')
-      expect(info.log).toBeCalledWith(`  \u001b[3${color};1minfo \u001b[0m%%this is message%%`, `\u001b[3${color}m+0ms\u001b[0m`)
+      expect(info.log).toHaveBeenCalledWith(`  \u001b[3${color};1minfo \u001b[0m%%this is message%%`, `\u001b[3${color}m+0ms\u001b[0m`)
     })
 
     test('color output: off', () => {
@@ -109,7 +109,7 @@ function tests () {
       info.log = jest.fn()
       info.useColors = false
       info('%%this is message%%')
-      expect(info.log).toBeCalledWith('info %%this is message%%')
+      expect(info.log).toHaveBeenCalledWith('info %%this is message%%')
     })
   })
 
