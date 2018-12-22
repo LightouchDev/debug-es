@@ -16,7 +16,9 @@ export default function () {
         return false
       },
       extend (namespace, delimiter) {
-        return createDebug(this.namespace + (typeof delimiter !== 'undefined' ? delimiter : ':') + namespace)
+        const newDebug = createDebug(this.namespace + (typeof delimiter !== 'undefined' ? delimiter : ':') + namespace)
+        newDebug.log = this.log
+        return newDebug
       }
     })
 
