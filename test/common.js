@@ -275,11 +275,8 @@ module.exports = (env, tests) => {
       const debug = require(modulePath)
       const info = debug('info')
       info.enabled = true
-      // workaround for jest in node 6, jest use modified console api
-      if (debug.log.toString() === 'function () { [native code] }') {
-        expect(() => info('hello world')).not.toThrow()
-        expect(() => info({})).not.toThrow()
-      }
+      expect(() => info('hello world')).not.toThrow()
+      expect(() => info({})).not.toThrow()
     })
   })
 
