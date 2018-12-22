@@ -169,6 +169,33 @@ const tests = () => {
     })
   })
 
+  describe('log', () => {
+    /* eslint-disable no-console */
+    test('when console is not exsits', () => {
+      const { console } = global
+      delete global.console
+      const debug = require(modulePath)
+      expect(debug.log('something')).toBeUndefined()
+      global.console = console
+    })
+
+    test('when console.debug is supported', () => {
+      console.debug = jest.fn()
+      const debug = require(modulePath)
+      debug.log('hello')
+      expect(console.debug).toHaveBeenCalledWith('hello')
+    })
+
+    test('when console.debug is unsupported', () => {
+      console.debug = undefined
+      console.log = jest.fn()
+      const debug = require(modulePath)
+      debug.log('hello')
+      expect(console.log).toHaveBeenCalledWith('hello')
+    })
+    /* eslint-enable no-console */
+  })
+
   describe('save', () => {
     const namespaces = 'test, -dummy, worker:*'
 
