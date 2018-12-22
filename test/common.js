@@ -146,6 +146,12 @@ module.exports = (env, tests) => {
           const logBar = log.extend('bar', '')
           expect(logBar.namespace).toEqual('foobar')
         })
+        test('should keep the log function between extensions', () => {
+          log.log = () => {}
+
+          const logBar = log.extend('bar')
+          expect(log.log).toStrictEqual(logBar.log)
+        })
       })
     })
 
