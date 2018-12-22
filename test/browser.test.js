@@ -113,14 +113,12 @@ const tests = () => {
       expect(debug.storage).not.toBeFalsy()
     })
 
-    // skip this test in CI
-    if (!process.env.CI) {
-      test('localStorage not exist', () => {
-        window.localStorage = undefined
-        const debug = require(modulePath)
-        expect(debug.storage).toBeUndefined()
-      })
-    }
+    // we can't disable localStorage manually.
+    test.skip('localStorage not exist', () => {
+      window.localStorage = undefined
+      const debug = require(modulePath)
+      expect(debug.storage).toBeUndefined()
+    })
   })
 
   describe('formatArgs', () => {
