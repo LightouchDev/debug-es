@@ -129,7 +129,7 @@ const tests = () => {
       const info = debug('info')
       info.log = jest.fn()
       info('%%this is message%%')
-      expect(info.log).toBeCalledWith('%cinfo %c%%this is message%% %c+0ms', 'color: #CC3300', 'color: inherit', 'color: #CC3300')
+      expect(info.log).toHaveBeenCalledWith('%cinfo %c%%this is message%% %c+0ms', 'color: #CC3300', 'color: inherit', 'color: #CC3300')
     })
 
     test('color output: off', () => {
@@ -138,7 +138,7 @@ const tests = () => {
       info.log = jest.fn()
       info.useColors = false
       info('%%this is message%%')
-      expect(info.log).toBeCalledWith('info %%this is message%% +0ms')
+      expect(info.log).toHaveBeenCalledWith('info %%this is message%% +0ms')
     })
 
     test('custom color tag', () => {
@@ -146,7 +146,7 @@ const tests = () => {
       const info = debug('info')
       info.log = jest.fn()
       info('%%this is %cmessage%%', 'color: #ff0000')
-      expect(info.log).toBeCalledWith('%cinfo %c%%this is %cmessage%% %c+0ms', 'color: #CC3300', 'color: inherit', 'color: #ff0000', 'color: #CC3300')
+      expect(info.log).toHaveBeenCalledWith('%cinfo %c%%this is %cmessage%% %c+0ms', 'color: #CC3300', 'color: inherit', 'color: #ff0000', 'color: #CC3300')
     })
   })
 
