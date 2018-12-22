@@ -109,18 +109,14 @@ const inject = (createDebug) => ({
 
   /**
    * Invokes `console.log()` when available.
-   * No-op when `console.log` is not a "function".
+   * No-op when `console.debug` is not a "function".
+   * If `console.debug` is not available, falls back
+   * to `console.log`
    *
    * @api public
    */
   /* eslint-disable no-console */
-  log () {
-    return (
-      typeof console === 'object' &&
-      console.log &&
-      Function.prototype.apply.call(console.log, console, arguments)
-    )
-  },
+  log: console.debug || console.log || (() => {}),
   /* eslint-enable no-console */
 
   /**
