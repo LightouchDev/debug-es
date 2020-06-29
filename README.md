@@ -21,9 +21,7 @@ $ yarn add debug-es
 
 ## Requirement
 
-- ES6 support
-  - node >= 6
-  - node 4 (not tested)
+- node.js >= 6
 
 ## Usage
 
@@ -78,38 +76,19 @@ Here are some examples:
 
 ### Choose implement (for tree-shaking)
 
-by default, **debug-es** would do lots of runtime environment check to choose implement (**node** or **browser**). but it's impossible for tree-shaking without modifying code (or DefinePlugin in webpack)
+by default, **debug-es** would do lots of runtime environment check to choose implement (**node** or **browser**). but it's impossible for tree-shaking without modifying.
 
-now, we expose init function for tree-shaking.
-
-#### CommonJS
+now, you can choose implement by loading submodule.
 
 ```javascript
 // for browser
-const debug = require('debug-es/lib/browser')()
+const debug = require('debug-es/browser')()
 
 // for node
-const debug = require('debug-es/lib/node')()
+const debug = require('debug-es/node')()
 
 // both (no tree-shaking)
 const debug = require('debug-es')
-```
-
-#### ES Module
-
-ES modules are already **bundled with (non-es) deps**, it can be transpiled by babel.
-
-```javascript
-// for browser
-import getDebug from 'debug-es/esm/browser'
-const debug = getDebug()
-
-// for node
-import getDebug from 'debug-es/esm/node'
-const debug = getDebug()
-
-// both (no tree-shaking)
-import debug from 'debug-es/esm'
 ```
 
 ### Windows command prompt notes

@@ -7,11 +7,9 @@
     "url": "https://github.com/LightouchDev/debug-es"
   },
   "main": "./lib/index.js",
+  "module": "./src/index.js",
   "scripts": {
-    "build": "npm run build:cjs && npm run build:esm && npm run build:umd",
-    "build:cjs": "cross-env BABEL_ENV=cjs rollup -c",
-    "build:esm": "cross-env BABEL_ENV=esm rollup -c",
-    "build:umd": "cross-env BABEL_ENV=umd rollup -c",
+    "build": "babel src --out-dir lib",
     "coverage": "cross-env BABEL_ENV=test jest --verbose --coverage --collectCoverageFrom=src/**/*",
     "test": "cross-env BABEL_ENV=test jest --verbose"
   },
@@ -31,6 +29,7 @@
     "supports-color": "^6.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "babel-core": "^7.0.0-bridge.0",
@@ -47,10 +46,6 @@
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
     "jest": "^23.5.0",
-    "regenerator-runtime": "^0.13.1",
-    "rollup": "^0.68.1",
-    "rollup-plugin-babel": "^4.1.0",
-    "rollup-plugin-commonjs": "^9.2.0",
-    "rollup-plugin-node-resolve": "^4.0.0"
+    "regenerator-runtime": "^0.13.1"
   }
 }
