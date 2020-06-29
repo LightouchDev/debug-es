@@ -21,7 +21,7 @@ $ yarn add debug-es
 
 ## Requirement
 
-- node.js >= 6
+- node.js >= 8
 
 ## Usage
 
