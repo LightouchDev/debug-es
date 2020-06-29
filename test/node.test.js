@@ -10,9 +10,9 @@ commonTest(env, tests)
 
 function tests () {
   test('detect environment', () => {
-    const debug = require(modulePath)
-    expect(debug.inspectOpts).toBeTruthy()
-  })
+      const debug = require(modulePath)
+      expect(debug.inspectOpts).toBeTruthy()
+    })
 
   describe('colors', () => {
     test('basic color support', () => {
@@ -29,7 +29,7 @@ function tests () {
 
     test('256-color support', () => {
       if (process.env.CI) {
-        process.env['FORCE_COLOR'] = 1
+        process.env.FORCE_COLOR = 1
         const supportsColor = require('supports-color')
         supportsColor.stderr.has256 = true
       }
@@ -51,10 +51,10 @@ function tests () {
   })
 
   test('inspectOpts', () => {
-    process.env['DEBUG_COLORS'] = 'no'
-    process.env['DEBUG_DEPTH'] = 10
-    process.env['DEBUG_SHOW_HIDDEN'] = 'enabled'
-    process.env['DEBUG_SHOW_PROXY'] = 'null'
+    process.env.DEBUG_COLORS = 'no'
+    process.env.DEBUG_DEPTH = 10
+    process.env.DEBUG_SHOW_HIDDEN = 'enabled'
+    process.env.DEBUG_SHOW_PROXY = 'null'
 
     const result = {
       colors: false,
@@ -71,7 +71,7 @@ function tests () {
 
     test('color output: on', () => {
       if (process.env.CI) {
-        process.env['FORCE_COLOR'] = 1
+        process.env.FORCE_COLOR = 1
         const supportsColor = require('supports-color')
         supportsColor.stderr.has256 = true
       }
@@ -103,7 +103,7 @@ function tests () {
     })
 
     test('color output: off, and hideDate', () => {
-      process.env['DEBUG_HIDE_DATE'] = 'on'
+      process.env.DEBUG_HIDE_DATE = 'on'
       const debug = require(modulePath)
       const info = debug('info')
       info.log = jest.fn()
@@ -139,12 +139,12 @@ function tests () {
 
   describe('useColors', () => {
     test('inspectOpts.colors === true', () => {
-      process.env['DEBUG_COLORS'] = 'on'
+      process.env.DEBUG_COLORS = 'on'
       expect(require(modulePath).useColors()).toBe(true)
     })
 
     test('inspectOpts.colors === false', () => {
-      process.env['DEBUG_COLORS'] = 'off'
+      process.env.DEBUG_COLORS = 'off'
       expect(require(modulePath).useColors()).toBe(false)
     })
 

@@ -97,7 +97,7 @@ export default createDebug => ({
    */
   selectColor (namespace) {
     let hash = 0
-    for (let i in namespace) {
+    for (const i in namespace) {
       hash = (hash << 5) - hash + namespace.charCodeAt(i)
       hash |= 0 // Convert to 32bit integer
     }
