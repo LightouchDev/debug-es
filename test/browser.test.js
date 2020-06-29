@@ -67,6 +67,10 @@ const tests = () => {
       const debug = require(modulePath)
       expect(debug).toHaveProperty('storage', expect.anything())
     })
+    test('load from browser.js', () => {
+      const debug = require(`${modulePath}/${env}`)
+      expect(debug).toHaveProperty('storage', expect.anything())
+    })
   })
 
   describe('formatters', () => {

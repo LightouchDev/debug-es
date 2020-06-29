@@ -9,10 +9,16 @@ const { modulePath, setWildcard } = commonTest
 commonTest(env, tests)
 
 function tests () {
-  test('detect environment', () => {
+  describe('detect environment', () => {
+    test('load from index.js', () => {
       const debug = require(modulePath)
       expect(debug.inspectOpts).toBeTruthy()
     })
+    test('load from node.js', () => {
+      const debug = require(`${modulePath}/${env}`)
+      expect(debug.inspectOpts).toBeTruthy()
+    })
+  })
 
   describe('colors', () => {
     test('basic color support', () => {
