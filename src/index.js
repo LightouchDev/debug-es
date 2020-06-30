@@ -1,10 +1,14 @@
-import browser from './browser'
-import node from './node'
+import common from './common'
+import createDebug from './createDebug'
+import browser from './injector/browser'
+import node from './injector/node'
+
+const debug = createDebug()
 
 /**
  * Detect environment
  */
-const debug =
+const inject =
   // web browsers
   typeof process === 'undefined' ||
   // Electron
@@ -13,7 +17,9 @@ const debug =
   process.__nwjs ||
   // 'process' package
   process.browser
-    ? browser()
-    : node()
+    ? browser
+    : node
 
-export default debug
+export default Object.assign(debug, common(debug), inject(debug))
+
+debug.enable(debug.load())

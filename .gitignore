@@ -60,10 +60,5 @@ typings/
 # next.js build output
 .next
 
-# we don't need to lock package version
-yarn.lock
-
 # build
-esm/
 lib/
-umd/

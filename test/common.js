@@ -28,7 +28,7 @@ function setWildcard (env) {
   env === 'node' && (process.env.DEBUG = '*')
 }
 
-module.exports = (env, tests) => {
+module.exports = (env, tests = () => true) => {
   beforeEach(() => resetEnv(env))
 
   describe(`common test in ${env}`, () => {
@@ -252,25 +252,6 @@ module.exports = (env, tests) => {
       })
     })
 
-    describe('init function', () => {
-      test(`init of ${env}`, () => {
-        const init = require(`${modulePath}/${env}`)
-        const firstInstance = init()
-        expect(init()).toEqual(firstInstance)
-      })
-
-      test('init without namespace', () => {
-        const init = require(`${modulePath}/init`)
-        const noop = () => {}
-        const mockFuncs = ({
-          enable: noop,
-          load: noop
-        })
-        const firstInstance = init(() => mockFuncs)
-        expect(init(() => mockFuncs) === firstInstance).toBeFalsy()
-      })
-    })
-
     test('basic sanity check', () => {
       const debug = require(modulePath)
       const info = debug('info')
@@ -280,7 +261,7 @@ module.exports = (env, tests) => {
     })
   })
 
-  tests && describe(`${env}-specific tests`, tests)
+  describe(`${env}-specific tests`, tests)
 }
 
 Object.assign(module.exports, {

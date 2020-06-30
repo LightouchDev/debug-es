@@ -2,11 +2,11 @@ module.exports = {
   root: true,
   parser: 'babel-eslint',
   parserOptions: {
-    sourceType: 'module',
+    sourceType: 'module'
   },
   env: {
     browser: true,
-    node: true,
+    node: true
   },
   extends: [
     'plugin:jest/recommended',
@@ -15,10 +15,8 @@ module.exports = {
   ],
   plugins: ['jest'],
   rules: {
-    // allow async-await
-    'generator-star-spacing': 'off',
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-empty': ['error', { 'allowEmptyCatch': true }]
+    'no-empty': ['error', { allowEmptyCatch: true }]
   }
 }

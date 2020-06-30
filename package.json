@@ -1,17 +1,15 @@
 {
   "name": "debug-es",
-  "version": "2.0.0",
+  "version": "3.0.0",
   "description": "small debugging utility like 'debug', but write in es6",
   "repository": {
     "type": "git",
     "url": "https://github.com/LightouchDev/debug-es"
   },
   "main": "./lib/index.js",
+  "module": "./src/index.js",
   "scripts": {
-    "build": "npm run build:cjs && npm run build:esm && npm run build:umd",
-    "build:cjs": "cross-env BABEL_ENV=cjs rollup -c",
-    "build:esm": "cross-env BABEL_ENV=esm rollup -c",
-    "build:umd": "cross-env BABEL_ENV=umd rollup -c",
+    "build": "babel src --out-dir lib",
     "coverage": "cross-env BABEL_ENV=test jest --verbose --coverage --collectCoverageFrom=src/**/*",
     "test": "cross-env BABEL_ENV=test jest --verbose"
   },
@@ -28,29 +26,26 @@
   "license": "MIT",
   "dependencies": {
     "ms": "^2.1.1",
-    "supports-color": "^6.0.0"
+    "supports-color": "^7.1.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.10.3",
     "@babel/core": "^7.2.2",
     "@babel/preset-env": "^7.2.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.4.2",
+    "babel-jest": "26.1.0",
     "babel-plugin-add-module-exports": "^1.0.0",
     "coveralls": "^3.0.2",
-    "cross-env": "^5.2.0",
-    "eslint": "^5.10.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.14.0",
-    "eslint-plugin-jest": "^22.1.2",
-    "eslint-plugin-node": "^8.0.0",
+    "cross-env": "7.0.2",
+    "eslint": "^7.3.1",
+    "eslint-config-standard": "^14.1.1",
+    "eslint-plugin-import": "^2.22.0",
+    "eslint-plugin-jest": "^23.17.1",
+    "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.0.1",
     "eslint-plugin-standard": "^4.0.0",
-    "jest": "^23.5.0",
-    "regenerator-runtime": "^0.13.1",
-    "rollup": "^0.68.1",
-    "rollup-plugin-babel": "^4.1.0",
-    "rollup-plugin-commonjs": "^9.2.0",
-    "rollup-plugin-node-resolve": "^4.0.0"
+    "jest": "26.1.0",
+    "regenerator-runtime": "^0.13.1"
   }
 }

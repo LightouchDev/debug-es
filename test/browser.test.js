@@ -43,28 +43,32 @@ const tests = () => {
     afterAll(() => { process.browser = true })
 
     // FIXME: no way to delete process
-    test.skip(`browser: no global process object`, () => {
+    test.skip('browser: no global process object', () => {
       delete global.process
 
       const debug = require(modulePath)
       expect(debug).toHaveProperty('storage', expect.anything())
     })
-    test(`Electron: process.type === 'renderer'`, () => {
+    test('Electron: process.type === \'renderer\'', () => {
       process.type = 'renderer'
 
       const debug = require(modulePath)
       expect(debug).toHaveProperty('storage', expect.anything())
     })
-    test(`nwjs: process.__nwjs is truthy`, () => {
+    test('nwjs: process.__nwjs is truthy', () => {
       process.__nwjs = 1
 
       const debug = require(modulePath)
       expect(debug).toHaveProperty('storage', expect.anything())
     })
-    test(`'process' package support`, () => {
+    test('\'process\' package support', () => {
       process.browser = true
 
       const debug = require(modulePath)
+      expect(debug).toHaveProperty('storage', expect.anything())
+    })
+    test('load from browser.js', () => {
+      const debug = require(`${modulePath}/${env}`)
       expect(debug).toHaveProperty('storage', expect.anything())
     })
   })
