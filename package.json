@@ -9,7 +9,7 @@
   "main": "./lib/index.js",
   "module": "./src/index.js",
   "scripts": {
-    "build": "babel src --out-dir lib",
+    "build": "cross-env BABEL_ENV=build babel src --out-dir lib",
     "coverage": "cross-env BABEL_ENV=test jest --verbose --coverage --collectCoverageFrom=src/**/*",
     "test": "cross-env BABEL_ENV=test jest --verbose"
   },
@@ -25,12 +25,15 @@
   ],
   "license": "MIT",
   "dependencies": {
+    "@babel/runtime-corejs3": "^7.10.3",
+    "core-js": "3",
     "ms": "^2.1.1",
     "supports-color": "^7.1.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.10.3",
     "@babel/core": "^7.2.2",
+    "@babel/plugin-transform-runtime": "^7.10.3",
     "@babel/preset-env": "^7.2.3",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
